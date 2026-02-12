@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tags Player Count</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Player Count per Tag</h1>
+    <canvas id="tagChart" width="800" height="400"></canvas>
+
+    <script>
+        async function loadTagChart() {
+            // Fetch JSON from API
+            const response = await fetch("/api/tags/playercounts");
+            const data = await response.json();
+
+            // Map data to Chart.js format
+            const labels = data.map(d => d.tagName);
+            const counts = data.map(d => d.playerCount);
+
+            const ctx = document.getElementById('tagChart').getContext('2d');
+
+            // Create bar chart
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Player Count',
+                        data: counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Player Count per Tag (Latest Snapshot)'
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", loadTagChart);
+    </script>
+</body>
+</html>
