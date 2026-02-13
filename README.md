@@ -45,7 +45,7 @@ Prerequisites To Run:
 Running The Project:
 1. Clone Repository
 
-  git clone <repo-url>
+  git clone https://github.com/C-Hawken03/SteamAnalytics
   cd SteamAnalytics
 
 2. Create Database
