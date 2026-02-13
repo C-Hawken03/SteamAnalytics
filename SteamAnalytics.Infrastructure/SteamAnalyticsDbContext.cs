@@ -56,7 +56,7 @@ namespace SteamAnalytics.Infrastructure.Persistence {
         private static void ConfigurePlayerSnapshot(ModelBuilder modelBuilder) {
             modelBuilder.Entity<PlayerSnapshot>(entity =>
             {
-                entity.ToTable("playersnapshots");
+                entity.ToTable("game_player_snapshots");
 
                 entity.HasKey(e => e.Id);
 
