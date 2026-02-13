@@ -13,7 +13,7 @@ The solution is structured as follows:
 
 SteamAnalytics
 │
-├── SteamAnalytics.Api              → ASP.NET Core Web API
+├── SteamAnalytics                  → ASP.NET Core Web API
 ├── SteamAnalytics.Application      → Interfaces & business logic
 ├── SteamAnalytics.Domain           → Core domain models
 ├── SteamAnalytics.Infrastructure   → EF Core, MySQL, Steam API integration
