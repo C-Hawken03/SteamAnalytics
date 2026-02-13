@@ -43,22 +43,38 @@ Prerequisites To Run:
   - EF Core CLI tool
     
 Running The Project:
-  1. Clone Repository
-    git clone <repo-url>
-    cd SteamAnalytics
-  2. Create Database
-    CREATE DATABASE SteamAnalytics;
-  3. Configure Connection String in SteamAnalytics.Api/appsettings.json:
-    {
-      "ConnectionStrings": {
-        "DefaultConnection": "server=localhost;database=SteamAnalytics;user=root;password=yourpassword;"
-      }
-    }
-  4. Apply Migrations
-     dotnet ef database update --project SteamAnalytics.Infrastructure --startup-project SteamAnalytics
-  5. Run the API
-     dotnet run --project SteamAnalytics
+1. Clone Repository
 
+  git clone <repo-url>
+  cd SteamAnalytics
+
+2. Create Database
+
+  Open MySQL and run:
+  CREATE DATABASE SteamAnalytics;
+
+3. Configure Connection String
+
+  In SteamAnalytics.Api/appsettings.json:
+  {
+    "ConnectionStrings": {
+      "DefaultConnection": "server=localhost;database=SteamAnalytics;user=root;password=yourpassword;"
+    }
+  }
+
+4. Apply Migrations
+   
+  Run from the solution root:
+  dotnet ef database update \
+    --project SteamAnalytics.Infrastructure \
+    --startup-project SteamAnalytics
+    
+5. Run the API
+
+  dotnet run --project SteamAnalytics
+  
+  The API will start at:
+  https://localhost:5001
 
 
 Project Status:
