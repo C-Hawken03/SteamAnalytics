@@ -30,9 +30,6 @@ Technologies Used:
 Database:
   The project uses MySQL as the primary data store. Migrations are handled using Entity Framework Core.
 
-Run migrations:
-  dotnet ef database update --project SteamAnalytics.Infrastructure --startup-project SteamAnalytics.Api
-
 Data Flow:
   - Steam API client retrieves app data.
   - SteamIngestionService processes and stores base game data.
@@ -40,20 +37,29 @@ Data Flow:
   - Data becomes available through the API layer.
   - Frontend consumes the API for charts/graphs.
 
-Configuration:
-  - Update appsettings.json in the API project
-  {
-    "ConnectionStrings": {
-      "DefaultConnection": "server=localhost;database=SteamAnalytics;user=root;password=yourpassword;"
+Prerequisites To Run:
+  - .NET 9 SDK
+  - MySQL 8 running locally
+  - EF Core CLI tool
+    
+Running The Project:
+  1. Clone Repository
+    git clone <repo-url>
+    cd SteamAnalytics
+  2. Create Database
+    CREATE DATABASE SteamAnalytics;
+  3. Configure Connection String in SteamAnalytics.Api/appsettings.json:
+    {
+      "ConnectionStrings": {
+        "DefaultConnection": "server=localhost;database=SteamAnalytics;user=root;password=yourpassword;"
+      }
     }
-  }
+  4. Apply Migrations
+     dotnet ef database update --project SteamAnalytics.Infrastructure --startup-project SteamAnalytics
+  5. Run the API
+     dotnet run --project SteamAnalytics
 
-Running the Project:
-  1. Clone the repository
-  2. Configure MySQL connection string
-  3. Apply migrations
-  4. Run the API via:
-    dotnet run --project SteamAnalytics
+
 
 Project Status:
   In active development
