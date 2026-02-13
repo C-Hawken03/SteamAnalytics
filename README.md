@@ -65,9 +65,7 @@ Running The Project:
 4. Apply Migrations
    
   Run from the solution root:
-  dotnet ef database update \
-    --project SteamAnalytics.Infrastructure \
-    --startup-project SteamAnalytics
+  dotnet ef database update --project SteamAnalytics.Infrastructure --startup-project SteamAnalytics
     
 5. Run the API
 
