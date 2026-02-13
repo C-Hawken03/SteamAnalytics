@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SteamAnalytics.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using SteamAnalytics.Infrastructure.Persistence;
 namespace SteamAnalytics.Infrastructure.Migrations
 {
     [DbContext(typeof(SteamAnalyticsDbContext))]
-    partial class SteamAnalyticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260213034507_VerifyDB")]
+    partial class VerifyDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace SteamAnalytics.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("GameTags", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("GameTags");
+                });
 
             modelBuilder.Entity("SteamAnalytics.Domain.Game", b =>
                 {
@@ -92,19 +110,21 @@ namespace SteamAnalytics.Infrastructure.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("gametags", b =>
+            modelBuilder.Entity("GameTags", b =>
                 {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("int");
+                    b.HasOne("SteamAnalytics.Domain.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_GameTags_GameId");
 
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("gametags");
+                    b.HasOne("SteamAnalytics.Domain.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_GameTags_TagId");
                 });
 
             modelBuilder.Entity("SteamAnalytics.Domain.PlayerSnapshot", b =>
@@ -120,21 +140,6 @@ namespace SteamAnalytics.Infrastructure.Migrations
                         .HasForeignKey("GameId1");
 
                     b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("gametags", b =>
-                {
-                    b.HasOne("SteamAnalytics.Domain.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SteamAnalytics.Domain.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SteamAnalytics.Domain.Game", b =>

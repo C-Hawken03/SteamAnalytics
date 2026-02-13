@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SteamAnalytics.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using SteamAnalytics.Infrastructure.Persistence;
 namespace SteamAnalytics.Infrastructure.Migrations
 {
     [DbContext(typeof(SteamAnalyticsDbContext))]
-    partial class SteamAnalyticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260213034850_SyncGameTags")]
+    partial class SyncGameTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,14 +130,16 @@ namespace SteamAnalytics.Infrastructure.Migrations
                     b.HasOne("SteamAnalytics.Domain.Game", null)
                         .WithMany()
                         .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_gametags_GamesId");
 
                     b.HasOne("SteamAnalytics.Domain.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_gametags_TagsId");
                 });
 
             modelBuilder.Entity("SteamAnalytics.Domain.Game", b =>

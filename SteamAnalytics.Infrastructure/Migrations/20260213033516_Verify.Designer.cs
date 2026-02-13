@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SteamAnalytics.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using SteamAnalytics.Infrastructure.Persistence;
 namespace SteamAnalytics.Infrastructure.Migrations
 {
     [DbContext(typeof(SteamAnalyticsDbContext))]
-    partial class SteamAnalyticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260213033516_Verify")]
+    partial class Verify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
